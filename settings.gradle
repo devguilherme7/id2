@@ -1,3 +1,4 @@
 rootProject.name = 'prosallo'
 
+include(':core')
 include(':identity')
