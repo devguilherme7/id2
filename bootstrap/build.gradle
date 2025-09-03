@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
     implementation project(':core')
+    implementation(project(':organization'))
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-authorization-server'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     implementation 'org.liquibase:liquibase-core'

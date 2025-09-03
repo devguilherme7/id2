@@ -1,4 +1,5 @@
 rootProject.name = 'prosallo'
 
-include(':core')
 include(':bootstrap')
+include(':core')
+include(':organization')
