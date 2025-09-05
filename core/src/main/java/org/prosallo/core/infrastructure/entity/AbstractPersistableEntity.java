@@ -5,7 +5,6 @@ import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PostLoad;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Transient;
-import lombok.Setter;
 import org.prosallo.core.infrastructure.identifier.Tsid;
 import org.springframework.data.domain.Persistable;
 
@@ -14,7 +13,6 @@ public abstract class AbstractPersistableEntity implements Persistable<Long> {
 
     @Id
     @Tsid
-    @Setter
     private Long id;
 
     @Transient
@@ -34,5 +32,9 @@ public abstract class AbstractPersistableEntity implements Persistable<Long> {
     @PostLoad
     public void markNowNew() {
         this.isNew = false;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

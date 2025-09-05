@@ -7,15 +7,11 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
 import org.prosallo.core.infrastructure.entity.AbstractAuditableEntity;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "organizations")
 public class OrganizationEntity extends AbstractAuditableEntity {
@@ -26,4 +22,20 @@ public class OrganizationEntity extends AbstractAuditableEntity {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "organization_id")
     private Set<OrganizationMemberEntity> members = new LinkedHashSet<>();
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<OrganizationMemberEntity> getMembers() {
+        return members;
+    }
+
+    public void setMembers(Set<OrganizationMemberEntity> members) {
+        this.members = members;
+    }
 }
