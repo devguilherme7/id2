@@ -35,17 +35,17 @@ public class DefaultOrganizationService implements OrganizationService {
     @Override
     @Transactional
     public OrganizationResponse createOrganization(String ownerId, String organizationName) {
-        var organization = Organization.create(organizationName);
+        Organization organization = Organization.create(organizationName);
         organization = organizationRepository.save(organization);
 
-        var ownerRole = Role.create(organization, SUPER_ADMIN_ROLE_NAME);
+        Role ownerRole = Role.create(organization, SUPER_ADMIN_ROLE_NAME);
         ownerRole = roleRepository.save(ownerRole);
 
-        var owner = OrganizationMember.create(organization, ownerId);
+        OrganizationMember owner = OrganizationMember.create(organization, ownerId);
         owner.assignRole(ownerRole);
         owner = organizationMemberRepository.save(owner);
 
-        var assignment = OrganizationMemberRoleAssignment.create(owner, ownerRole);
+        OrganizationMemberRoleAssignment assignment = OrganizationMemberRoleAssignment.create(owner, ownerRole);
         organizationMemberRoleAssignmentRepository.save(assignment);
 
         return new OrganizationResponse(organization.getId(), organization.getName());
