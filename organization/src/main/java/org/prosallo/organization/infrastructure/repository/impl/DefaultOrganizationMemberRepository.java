@@ -7,6 +7,8 @@ import org.prosallo.organization.model.OrganizationMember;
 import org.prosallo.organization.repository.OrganizationMemberRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public class DefaultOrganizationMemberRepository implements OrganizationMemberRepository {
 
@@ -24,5 +26,10 @@ public class DefaultOrganizationMemberRepository implements OrganizationMemberRe
         OrganizationMemberEntity entity = jpaMapper.toEntity(organizationMember);
         OrganizationMemberEntity savedEntity = jpaRepository.save(entity);
         return jpaMapper.toDomain(savedEntity);
+    }
+
+    @Override
+    public Optional<OrganizationMember> findByIdAndOrganizationId(Long id, Long organizationId) {
+        return jpaRepository.findByIdAndOrganizationId(id, organizationId).map(jpaMapper::toDomain);
     }
 }

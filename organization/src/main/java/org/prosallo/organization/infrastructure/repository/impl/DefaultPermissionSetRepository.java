@@ -7,6 +7,8 @@ import org.prosallo.organization.model.PermissionSet;
 import org.prosallo.organization.repository.PermissionSetRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public class DefaultPermissionSetRepository implements PermissionSetRepository {
 
@@ -23,5 +25,10 @@ public class DefaultPermissionSetRepository implements PermissionSetRepository {
         PermissionSetEntity entity = jpaMapper.toEntity(permissionSet);
         PermissionSetEntity savedEntity = jpaRepository.save(entity);
         return jpaMapper.toDomain(savedEntity);
+    }
+
+    @Override
+    public Optional<PermissionSet> findByIdAndOrganizationId(Long id, Long organizationId) {
+        return jpaRepository.findByIdAndOrganizationId(id, organizationId).map(jpaMapper::toDomain);
     }
 }
