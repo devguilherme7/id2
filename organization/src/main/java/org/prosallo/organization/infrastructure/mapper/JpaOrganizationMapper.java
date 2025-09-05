@@ -5,7 +5,7 @@ import org.prosallo.core.infrastructure.configuration.GlobalMapperConfiguration;
 import org.prosallo.organization.infrastructure.entity.OrganizationEntity;
 import org.prosallo.organization.model.Organization;
 
-@Mapper(config = GlobalMapperConfiguration.class, uses = {JpaOrganizationMemberMapper.class})
+@Mapper(config = GlobalMapperConfiguration.class)
 public interface JpaOrganizationMapper {
 
     Organization toDomain(OrganizationEntity entity);
