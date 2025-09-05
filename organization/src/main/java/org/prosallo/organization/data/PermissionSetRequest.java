@@ -4,8 +4,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public record OrganizationRoleRequest(
-        @Schema(description = "The name of the role", example = "Admin")
+public record PermissionSetRequest(
+        @Schema(description = "The name of the permission set", example = "Admin")
         @NotBlank
         @Size(min = 3, max = 100)
         String name) {

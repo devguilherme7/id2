@@ -9,18 +9,18 @@ import jakarta.persistence.UniqueConstraint;
 import org.prosallo.core.infrastructure.entity.AbstractPersistableEntity;
 
 @Entity
-@Table(name = "organization_member_role_assigments", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"organization_member_id", "role_id"})
+@Table(name = "organization_member_permission_set_assigments", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"organization_member_id", "permission_set_id"})
 })
-public class OrganizationMemberRoleAssignmentEntity extends AbstractPersistableEntity {
+public class OrganizationMemberPermissionSetAssignmentEntity extends AbstractPersistableEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "organization_member_id", nullable = false, updatable = false)
     private OrganizationMemberEntity member;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "role_id", nullable = false, updatable = false)
-    private RoleEntity role;
+    @JoinColumn(name = "permission_set_id", nullable = false, updatable = false)
+    private PermissionSetEntity permissionSet;
 
     public OrganizationMemberEntity getMember() {
         return member;
@@ -30,11 +30,11 @@ public class OrganizationMemberRoleAssignmentEntity extends AbstractPersistableE
         this.member = member;
     }
 
-    public RoleEntity getRole() {
-        return role;
+    public PermissionSetEntity getPermissionSet() {
+        return permissionSet;
     }
 
-    public void setRole(RoleEntity role) {
-        this.role = role;
+    public void setPermissionSet(PermissionSetEntity permissionSet) {
+        this.permissionSet = permissionSet;
     }
 }

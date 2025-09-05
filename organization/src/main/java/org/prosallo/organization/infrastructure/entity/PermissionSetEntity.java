@@ -10,10 +10,10 @@ import jakarta.persistence.UniqueConstraint;
 import org.prosallo.core.infrastructure.entity.AbstractAuditableEntity;
 
 @Entity
-@Table(name = "organization_roles", uniqueConstraints = {
+@Table(name = "permission_sets", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"organization_id", "name"})
 })
-public class RoleEntity extends AbstractAuditableEntity {
+public class PermissionSetEntity extends AbstractAuditableEntity {
 
     @Column(name = "name", nullable = false, length = 100)
     private String name;

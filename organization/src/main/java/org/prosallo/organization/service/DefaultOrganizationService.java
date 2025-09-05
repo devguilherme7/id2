@@ -3,12 +3,12 @@ package org.prosallo.organization.service;
 import org.prosallo.organization.data.OrganizationResponse;
 import org.prosallo.organization.model.Organization;
 import org.prosallo.organization.model.OrganizationMember;
-import org.prosallo.organization.model.OrganizationMemberRoleAssignment;
-import org.prosallo.organization.model.Role;
+import org.prosallo.organization.model.OrganizationMemberPermissionSetAssignment;
+import org.prosallo.organization.model.PermissionSet;
 import org.prosallo.organization.repository.OrganizationMemberRepository;
-import org.prosallo.organization.repository.OrganizationMemberRoleAssignmentRepository;
+import org.prosallo.organization.repository.OrganizationMemberPermissionSetAssignmentRepository;
 import org.prosallo.organization.repository.OrganizationRepository;
-import org.prosallo.organization.repository.RoleRepository;
+import org.prosallo.organization.repository.PermissionSetRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,18 +18,18 @@ public class DefaultOrganizationService implements OrganizationService {
     private static final String SUPER_ADMIN_ROLE_NAME = "SUPER_ADMIN";
 
     private final OrganizationRepository organizationRepository;
-    private final RoleRepository roleRepository;
+    private final PermissionSetRepository permissionSetRepository;
     private final OrganizationMemberRepository organizationMemberRepository;
-    private final OrganizationMemberRoleAssignmentRepository organizationMemberRoleAssignmentRepository;
+    private final OrganizationMemberPermissionSetAssignmentRepository organizationMemberPermissionSetAssignmentRepository;
 
     public DefaultOrganizationService(OrganizationRepository organizationRepository,
-            RoleRepository roleRepository,
+            PermissionSetRepository permissionSetRepository,
             OrganizationMemberRepository organizationMemberRepository,
-            OrganizationMemberRoleAssignmentRepository organizationMemberRoleAssignmentRepository) {
+            OrganizationMemberPermissionSetAssignmentRepository organizationMemberPermissionSetAssignmentRepository) {
         this.organizationRepository = organizationRepository;
-        this.roleRepository = roleRepository;
+        this.permissionSetRepository = permissionSetRepository;
         this.organizationMemberRepository = organizationMemberRepository;
-        this.organizationMemberRoleAssignmentRepository = organizationMemberRoleAssignmentRepository;
+        this.organizationMemberPermissionSetAssignmentRepository = organizationMemberPermissionSetAssignmentRepository;
     }
 
     @Override
@@ -38,15 +38,15 @@ public class DefaultOrganizationService implements OrganizationService {
         Organization organization = Organization.create(organizationName);
         organization = organizationRepository.save(organization);
 
-        Role ownerRole = Role.create(organization, SUPER_ADMIN_ROLE_NAME);
-        ownerRole = roleRepository.save(ownerRole);
+        PermissionSet ownerPermissionSet = PermissionSet.create(organization, SUPER_ADMIN_ROLE_NAME);
+        ownerPermissionSet = permissionSetRepository.save(ownerPermissionSet);
 
         OrganizationMember owner = OrganizationMember.create(organization, ownerId);
-        owner.assignRole(ownerRole);
         owner = organizationMemberRepository.save(owner);
 
-        OrganizationMemberRoleAssignment assignment = OrganizationMemberRoleAssignment.create(owner, ownerRole);
-        organizationMemberRoleAssignmentRepository.save(assignment);
+        OrganizationMemberPermissionSetAssignment assignment =
+                OrganizationMemberPermissionSetAssignment.create(owner, ownerPermissionSet);
+        organizationMemberPermissionSetAssignmentRepository.save(assignment);
 
         return new OrganizationResponse(organization.getId(), organization.getName());
     }
