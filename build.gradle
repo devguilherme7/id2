@@ -47,4 +47,10 @@ subprojects {
     test {
         useJUnitPlatform()
     }
+
+    tasks.withType(JavaCompile).tap {
+        configureEach {
+            options.compilerArgs += ["-parameters"]
+        }
+    }
 }
